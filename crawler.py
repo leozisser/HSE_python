@@ -1,4 +1,5 @@
 __author__ = '123'
+#-*- coding: utf-8 -*-
 import re, os, urllib.request
 
 startinglink = ("http://zavety-i.ru/")
@@ -8,56 +9,61 @@ done_links = []
 regex = re.compile("\?module[^\"\']*")
 
 dirr = input('input path to save files:')
-os.mkdir(os.path.join(dirr,"1"))
-
-def download(href):
-    b = urllib.request.Request('http://www.zavety-i.ru/'+ href, headers = {'User-Agent':"Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"})
-    a = urllib.request.urlopen(b)
-    links.remove(href)
-    done_links.append(href)
-    page = a.read().decode('utf-8')
-    packer(page, dirr)
-    page.readlines()
-    for line in page:
-        batch = re.findall(href,line)#.split(href)
-        for link in batch:
-            if link not in links and link not in done_links:
-                links.append(link)
 
 
+#done = open(os.path.join(dirr,"done.txt"),"a+")
+#done1 = re.findall("\?module[^\"\']*",done.read.decode(utf-8))
+#for i in done:
+#    done_links.append(i)
+#gathered = open(os.path.join(dirr,"gathered.txt"), "a+")
+#gathered1=re.findall("\?module[^\"\']*",gathered.read.decode(utf-8))
+#for j in gathered:
+#    links.append(j)
 
-
-def crawler (hrefs, visited):
-    for link in hrefs:
-        if link in hrefs and link not in visited:
-            b = urllib.request.Request('http://www.zavety-i.ru/'+link, headers = {'User-Agent':"Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"})
-            a = urllib.request.urlopen(b)
-            page = a.read().decode('utf-8')
-
-
- #созает папку с номером первой текущей поддиректории
+if not os.path.exists(os.path.join(dirr,"1")):
+    os.mkdir(os.path.join(dirr,"1"))
+     #СЃРѕР·Р°РµС‚ РїР°РїРєСѓ СЃ РЅРѕРјРµСЂРѕРј РїРµСЂРІРѕР№ С‚РµРєСѓС‰РµР№ РїРѕРґРґРёСЂРµРєС‚РѕСЂРёРё
 
 def packer(page, dirr):
 
-    cntdir = len(os.listdir(dirr)) #считет колчество папок в главной директории ПОСМОТРЕТЬ, ТОЛЬКО ЛИ ПАПОК. Может вынести за цикл?
-    #cntdir = 1
-    cntfile = len(os.listdir(dirr + "/" + str(cntdir))) #считает колисество файлов в данной поддиректории
-    #создает папку с номером текущей поддиректории
+    cntdir = len(os.listdir(dirr)) #СЃС‡РёС‚РµС‚ РєРѕР»С‡РµСЃС‚РІРѕ РїР°РїРѕРє РІ РіР»Р°РІРЅРѕР№ РґРёСЂРµРєС‚РѕСЂРёРё РџРћРЎРњРћРўР Р•РўР¬, РўРћР›Р¬РљРћ Р›Р РџРђРџРћРљ. РњРѕР¶РµС‚ РІС‹РЅРµСЃС‚Рё Р·Р° С†РёРєР»?
+    print("init cntdir =", cntdir)
+    cntfile = len(os.listdir(dirr + "/" + str(cntdir))) #СЃС‡РёС‚Р°РµС‚ РєРѕР»РёСЃРµСЃС‚РІРѕ С„Р°Р№Р»РѕРІ РІ РґР°РЅРЅРѕР№ РїРѕРґРґРёСЂРµРєС‚РѕСЂРёРё
+    print("current cntfile =", cntfile)
+    #СЃРѕР·РґР°РµС‚ РїР°РїРєСѓ СЃ РЅРѕРјРµСЂРѕРј С‚РµРєСѓС‰РµР№ РїРѕРґРґРёСЂРµРєС‚РѕСЂРёРё
 
     if cntfile < 50:
         cur = open (os.path.join(dirr, str(cntdir), str(cntfile + 1)+".txt"),'w')
         cur.write(page)
-        return "written to current folder"
+        print ("page "+str(cntfile)+" written to  folder "+str(cntdir))
     else:
         cntdir +=1
-        folder (dirr, cntdir) #создает новую папку с номером на 1 больше
+        print("cntdir =", cntdir)
+        os.mkdir(os.path.join(dirr,str(cntdir)))
+        print ("folder"+str(cntdir)+"created") #СЃРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ РїР°РїРєСѓ СЃ РЅРѕРјРµСЂРѕРј РЅР° 1 Р±РѕР»СЊС€Рµ
         packer(page, dirr)
         return "new folder needed"
 
 
-def folder (dirr, cnt): #создает папку с номером  новой текущей поддиректории
-    os.mkdir(dirr, cnt)
-    return "folder"+str(cnt)+"created"
-#1. создается главная директориядиректория
-#2. создается первая папка
-#3. проводится запись
+def download(href):
+    b = urllib.request.Request('http://www.zavety-i.ru/'+ href, headers = {'User-Agent':"Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"})
+    a = urllib.request.urlopen(b)
+    if href in links:
+        links.remove(href)
+        done_links.append(href)
+#        done.wtite(str(href) + " ") #РїРёС€РµРј РІ РєРѕРЅРµС† С„Р°Р№Р»РёРєР° РїР°РјСЏС‚Рё РїСЂРѕР№РґРµРЅРЅС‹С… СЃСЃС‹Р»РѕРє
+    page = a.read().decode('utf-8')
+    packer(page, dirr)
+    batch = re.findall("\?module[^\"\']*",page)
+    for link in batch:
+        if link not in links and link not in done_links:
+            links.append(link)
+#            gathered.write(link + " ") #РїРёС€РµРј РІ РєРѕРЅРµС† С„Р°Р№Р»РёРєР° РїР°РјСЏС‚Рё РЅРµРїСЂРѕР№РґРµРЅРЅС‹С… СЃСЃС‹Р»РѕРє
+
+download("/")
+if links != []:
+    for k in links:
+        download(k)
+
+else:
+    print("links empty!")
