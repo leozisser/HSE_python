@@ -1,35 +1,5 @@
 __author__ = '123'
 import requests, csv, time, os
-
-if not os.path.exists("vkdata"):
-    dirr = os.mkdir("vkdata")
-
-token = '1caa182d8573f016c008f205fdbd6cede8292ba0fdff302b09758366a982868b264bc90b3d596b29f5cb5'
-
-userdata = open("userdata.csv", "w", newline='', )
-datawriter = csv.writer(userdata, delimiter = "\t", quotechar = '', quoting=csv.QUOTE_NONE)
-datawriter.writerow (['user_id', 'Name', 'Gender', 'Birth_Date', 'religion', 'relations', 'languages'])#krasnoselkup
-
-fields = "bdate, sex, education, relation, religion, school"#learn what 'personal' is and maybe add
-
-userlink = 'https://api.vk.com/method/users.search'
-wallink =  'https://api.vk.com/method/wall.get'
-
-params_s = {"access_token":token, "country":1, "city": 2123, "fields":fields, "count":10}
-
-fields = {'first_name':1, 'last_name':1, 'sex':2,'uid':0, 'bdate':3, 'religion':4, 'relation':5, 'langs':6}
-
-crawler = requests.get(userlink, params = params_s)
-
-batch = crawler.json()
-
-text_fields = {'first_name':1, 'last_name':1, 'sex':2,'uid':0, 'bdate':3, 'religion':4, 'relation':5, 'langs':6}
-
-# for man in batch['response'][1:]:
-#     line = {""*8}
-#     for feature in man:
-#         print__author__ = '123'
-import requests, csv, time, os
 token = '1caa182d8573f016c008f205fdbd6cede8292ba0fdff302b09758366a982868b264bc90b3d596b29f5cb5'
 
 if not os.path.exists("vkdata"):
@@ -83,4 +53,3 @@ for man in batch['response'][1:]:
 
 userdata.close()
 # batch['response']
-print (batch)
