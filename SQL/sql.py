@@ -20,6 +20,7 @@ c.execute('create table vktable (last_name varchar(20), first_name varchar(15), 
 
 for i in vkread:
     listed = list(i)
-    c.execute('insert into vktable (last_name, first_name, gender, bdate, religion, relations, langs, id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', listed)
+    c.execute('insert into vktable (last_name, first_name, gender, bdate, religion, relations, langs, id) '
+              'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', listed)
 
 cr.close()
