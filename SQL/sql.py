@@ -12,7 +12,7 @@ vkread = csv.reader(data, delimiter = "\t", quotechar = '', quoting=csv.QUOTE_NO
 out =  open("sqlout.txt", 'w', encoding='utf-8')
 # next(vkread, None) #how d'you get rid of headers any other way?
 
-sql = pymysql.connect(host='localhost', user='123', passwd='', db='mysql')
+sql = pymysql.connect(host='localhost', user='123', passwd='')
 c = sql.cursor()
 c.execute('create database vkdata')
 c.execute('create table vktable (last_name varchar(20), first_name varchar(15), gender varchar(3), bdate varchar(10), religion varchar(3), langs varchar(3), id varchar(10)') #sad but true, i didnt get  the languages out
